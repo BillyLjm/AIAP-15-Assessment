@@ -1,2 +1,2 @@
-# aiap15-lim-jun-ming-820J
-AIAP Batch 15 Technical Assessment
+# AIAP Batch 15 Technical Assessment
+This is the AIAP Batch 15 technical assessment completed by Billy Lim Jun Ming

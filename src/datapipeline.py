@@ -32,8 +32,11 @@ class Datapipeline():
         scale_pre = {'Not at all important': 1, 'A little important': 2, 
                      'Somewhat important': 3, 'Very important': 4, 
                      'Extremely important': 5}
-        if not rating in scale_pre: return rating 
-        else: return scale_pre[rating]
+        
+        if (pd.isnull(rating)): return rating
+        elif (rating in scale_pre): return scale_pre[rating]
+        elif (rating in scale_pre.values()): return rating
+        else: return np.nan
 
     def clean_distance(self, dist: str) -> int:
         """
@@ -92,9 +95,12 @@ class Datapipeline():
         df = df.join(self.remove_dupl(df_post))
 
         # convert 5-star rating to ordinal
-        df['Onboard Wifi Service'] = df['Onboard Wifi Service'].apply(self.clean_5star_rating)
-        df['Onboard Dining Service'] = df['Onboard Dining Service'].apply(self.clean_5star_rating)
-        df['Onboard Entertainment'] = df['Onboard Entertainment'].apply(self.clean_5star_rating)
+        pent_cols = ['Onboard Wifi Service', 'Embarkation/Disembarkation time convenient', # 4-point rating
+             'Ease of Online booking', 'Gate location', 'Onboard Dining Service', 
+             'Online Check-in', 'Cabin Comfort', 'Onboard Entertainment', 'Cabin service',
+             'Baggage handling', 'Port Check-in Service', 'Onboard Service', 'Cleanliness']
+        for i in pent_cols:
+            df[i] = df[i].apply(self.clean_5star_rating)
 
         # clean distance
         df['Cruise Distance'] = df['Cruise Distance'].apply(self.clean_distance)

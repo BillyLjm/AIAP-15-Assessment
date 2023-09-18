@@ -77,8 +77,11 @@ class Model:
             scoring='f1_macro', cv=StratifiedKFold(5),
             n_jobs=-1)
 
+        # train preprocessing pipeline.
+        self.preprocess.fit(self.X_train)
+
         # remember best grid search
-        clf.fit(self.preprocess.fit_transform(self.X_train),
+        clf.fit(self.preprocess.transform(self.X_train),
             self.labenc.transform(self.y_train))
         self.model = clf.best_estimator_
 
@@ -92,7 +95,7 @@ class Model:
         """
         y_pred = self.labenc.inverse_transform(
             self.model.predict(
-                self.preprocess.fit_transform(self.X_test)
+                self.preprocess.transform(self.X_test)
         ))
         return f1_score(y_pred, self.y_test, average='macro')
 
@@ -106,7 +109,7 @@ class Model:
         # This should use the trained model to predict the target for the test_data and return the test mse
         return self.labenc.inverse_transform(
             self.model.predict(
-                self.preprocess.fit_transform(X)
+                self.preprocess.transform(X)
         ))
 
 if __name__ == "__main__":

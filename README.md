@@ -21,24 +21,24 @@ An example of its output is given below.
 $ bash run.sh  
 -------  
  Dummy  
--------  
-Hyperparameters used are {}  
-The test F1-macro score is 0.21581929516985543  
------  
- SVM  
------  
-Hyperparameters used are {'C': 0.03125}  
-The test F1-macro score is 0.4959694128456735  
----------------  
- Random Forest  
----------------  
-Hyperparameters used are {'criterion': 'gini', 'max_depth': 50, 'max_features': 'sqrt', 'n_estimators': 10}  
-The test F1-macro score is 0.5434324734280599  
-----------------  
- Gradient Boost  
-----------------  
-Hyperparameters used are {'learning_rate': 0.1, 'max_depth': 7, 'max_iter': 500}  
-The test F1-macro score is 0.54650502304303  
+-------
+Hyperparameters used are {}
+The test F1-macro score is 0.21581929516985543
+-----
+ SVM
+-----
+Hyperparameters used are {'C': 0.03125}
+The test F1-macro score is 0.4957812932938626
+---------------
+ Random Forest
+---------------
+Hyperparameters used are {'criterion': 'gini', 'max_depth': 80, 'max_features': 'sqrt', 'n_estimators': 10}
+The test F1-macro score is 0.5420678411521804
+----------------
+ Gradient Boost
+----------------
+Hyperparameters used are {'learning_rate': 0.1, 'max_depth': 9, 'max_iter': 500}
+The test F1-macro score is 0.5482298987666266
 ```  
   
 ## Pipeline Instructions  

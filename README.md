@@ -4,14 +4,16 @@ Email Address: billy.ljm@gmail.com
   
 ## Folder Structure  
 - `.github/`: github actions workflow
-- `src/`: Folder of the machine learning pipeline  
+- `src/`: Folder of the machine learning pipelines  
     - `datapipeline.py`: Datapipeline class to read and clean the datasets, and separate into features and labels  
     - `model_dummy.py`: Dummy classifier to set the baseline  
     - `model_svm.py`: Linear support vector machine model  
     - `model_forest.py`: Random forest model  
     - `model_boost.py`: Gradient-boosted tree model  
     - `transfromers.py`: custom sklearn column transformers
-- `eda.ipynb`: IPython notebook of exploratory data exploration process  
+- `data/`: Folder of the training and testing datasets *(this is required for `run.sh` and the github actions to run successfully)*  
+    - `cruise_pre.db`: pre-purchase survey dataset
+    - `cruise_post.db`: post-trip survey dataset
 - `requirements.txt`: Python requirement file  
 - `run.sh`: Bash script that trains all the ML models and tests them  
   

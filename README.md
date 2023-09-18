@@ -3,12 +3,14 @@ Full Name: Lim Jun Ming
 Email Address: billy.ljm@gmail.com  
   
 ## Folder Structure  
+- `.github/`: github actions workflow
 - `src/`: Folder of the machine learning pipeline  
     - `datapipeline.py`: Datapipeline class to read and clean the datasets, and separate into features and labels  
     - `model_dummy.py`: Dummy classifier to set the baseline  
     - `model_svm.py`: Linear support vector machine model  
     - `model_forest.py`: Random forest model  
     - `model_boost.py`: Gradient-boosted tree model  
+    - `transfromers.py`: custom sklearn column transformers
 - `eda.ipynb`: IPython notebook of exploratory data exploration process  
 - `requirements.txt`: Python requirement file  
 - `run.sh`: Bash script that trains all the ML models and tests them  

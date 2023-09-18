@@ -5,6 +5,21 @@ import Levenshtein
 
 class Datapipeline():
 
+    def transform_data (self, pre_path: str, post_path: str) -> tuple:
+        """
+        Reads the pre-purchase and post-trip databases into a feature and target
+        variable dataframe suitable for training our ML model
+
+        :param pre_path: filepath to the pre-purchase survey result database
+        :param post_path: filepath to the post-trip survey result database
+        :return: tuple of (features, label) pandas dataframe
+        """
+        df = self.read_data(pre_path, post_path)
+        df = df[df['Ticket Type'].notnull()]
+        y = df['Ticket Type']
+        X = df.drop(columns=['Ticket Type'])
+        return X, y
+
     def remove_dupl(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         Removes rows with duplicate 'Ext_Intcode' from the cruise survey results

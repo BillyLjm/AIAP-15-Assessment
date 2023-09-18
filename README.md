@@ -65,6 +65,16 @@ The flow of the pipelines in each `model_xxx.py` are very similar.
 4. Calling `model.test()` returns the F1-macro score of the trained model on the test dataset  
 5. Calling `model.predict(features)` the applies the trained model onto new data beyond the train/test dataset.  
   
+## Data Cleaning
+The steps taken to clean the raw dataset from the SQL databases are:
+- Removed duplicated `Ext_Intcode`, only taking the rows with fewer null values.  
+- Pre-purchase and post-trip surveys are joined based on the now-unique `Ext_Intcode`.  
+- All the pre-purchase 5-star ratings are converted to the same ordinal scale (1 to 5).  
+- `Cruise Distance` is converted to the numerical distance in kilometres.  
+- `Cruise Names` typos are fixed by mapped onto either `'Blastoise'` or `'Lapras'` based on the smallest Levenshtein edit distance.
+- `Date of Birth` is thresholded such that any dates before 1920 is ignored.  
+- `Logging` is thresholded such that any dates after September 2023 is ignored.  
+  
 ## EDA Findings  
 The main EDA findings are:  
 1. The labels are very imbalanced with Luxury, Deluxe, and Standard making up 48%, 7%, and 45% of the non-null labels respectively.  

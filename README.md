@@ -166,10 +166,10 @@ And the maximum score for each of the optimised models is
   
 |          Model | F1-macro |  
 |----------------|----------|  
-|          Dummy |    0.226 |  
+|          Dummy |    0.216 |  
 |            SVM |    0.496 |  
-|  Random Forest |    0.543 |  
-| Gradient Boost |    0.546 |  
+|  Random Forest |    0.542 |  
+| Gradient Boost |    0.548 |  
   
 Thus, the gradient boost tree yields the best F1-macro score, and will be the one I'll propose to use in production.  
   

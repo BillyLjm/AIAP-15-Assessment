@@ -7531,8 +7531,8 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="0.-Data-Reading">0. Data Reading<a class="anchor-link" href="#0.-Data-Reading">¶</a></h1><p><sub>We were instructed to remove the SQL databases from our submission, so you have to add them back before re-running this ipynb.</sub></p>
-<p>There are two SQL databases provided, in <code>./data/cruise_pre.db</code> and <code>./data/cruise_post.db</code>.
-The description of the attributes in each of these databases are provided in the</p>
+<p>There are two SQL databases provided, in <code>./data/cruise_pre.db</code> and <code>./data/cruise_post.db</code>.<br/>
+The description of the attributes in each of these databases are provided alongside the instructions for the assignment.</p>
 </div>
 </div>
 </div>
@@ -7855,7 +7855,7 @@ The description of the attributes in each of these databases are provided in the
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="1.1.-Duplicate-Ext_Intcode">1.1. Duplicate Ext_Intcode<a class="anchor-link" href="#1.1.-Duplicate-Ext_Intcode">¶</a></h2><p>We want to use <code>Ext_Intcode</code> as the index, since it should be unique for each passenger.</p>
 <p>But it appears that several <code>Ext_Intcode</code> are duplicated across multiple rows in the database.<br/>
-Visual insepction reveals that these rows and mostly identical, with <code>Logging</code> columns that are too close to indicate repeat passengers.<br/>
+Visual inspection reveals that these rows and mostly identical, with <code>Logging</code> columns that are too close to indicate repeat passengers.<br/>
 So, we'll drop these rows with duplicated <code>Ext_Intcode</code>, only keeping the row with the least NA values.</p>
 </div>
 </div>
@@ -9562,8 +9562,8 @@ We can test that it was replicated exactly here.</p>
 <p>Based on these, I am keen to drop the entire <code>Wifi</code>, <code>Entertainment</code>, and <code>Dining</code> columns because</p>
 <ul>
 <li>Their completeness and/or accuracy is highly suspect</li>
-<li>They correspond to information that exists only after the passenger has choosen which type of ticket to purchase.<br/>
-Thus, those columns should logically have no bearing on our the pasenger's choice of ticket, which is our target variable.</li>
+<li>They correspond to information that exists only after the passenger has chosen which type of ticket to purchase.<br/>
+Thus, those columns should logically have no bearing on our the passenger's choice of ticket, which is our target variable.</li>
 </ul>
 <p>But I'll still include them in the EDA for now, to see if any other interesting trends appear.</p>
 </div>
@@ -9749,7 +9749,7 @@ Thus, we should stratify when splitting the sample, or resample the data before 
 <ul>
 <li>For continuous/ordinal pairs , we'll use Spearman's $\rho$</li>
 <li>For categorical pairs, we'll use Cramer's $V$</li>
-<li>To compare across continuous/ordinal and categorical, we'll use point-biserial coefficient between the one-hot encoded categortical variable and rank of the continuous/ordinal variable.</li>
+<li>To compare across continuous/ordinal and categorical, we'll use point-biserial coefficient between the one-hot encoded categorical variable and rank of the continuous/ordinal variable.</li>
 </ul>
 <p>We chose to use Spearman's $\rho$ instead of Pearon's correlation because:</p>
 <ul>
@@ -9761,9 +9761,9 @@ However, each of these measures are different since they are meant to applied on
 <hr/>
 <p>Notable observations are:</p>
 <ul>
-<li>Our target variable <code>Ticket Type</code> is strongly correlated to <code>Cruise Name</code>, <code>Cruise Distance</code> and the 13 pre-pruchase ratings.<br/>
+<li>Our target variable <code>Ticket Type</code> is strongly correlated to <code>Cruise Name</code>, <code>Cruise Distance</code> and the 13 pre-purchase ratings.<br/>
 Luxury ticket seems to be 1st class, then Deluxe, then Standard; since luxury ticket passengers have higher standards and go on longer cruises.</li>
-<li>There is strong correlation within subsets of the 13 pre-pruchase ratings, suggests there are distinct customer archetypes concerned with convenience/activties/hospitality services.<br/>
+<li>There is strong correlation within subsets of the 13 pre-purchase ratings, suggests there are distinct customer archetypes concerned with convenience/activities/hospitality services.<br/>
 We can try aggregating some of these ratings together, to identify each of these groups later in feature engineering.</li>
 <li><code>Logging</code> is not correlated to anything. However, this is expected based on its description.</li>
 <li><code>Wifi</code>, <code>Dining</code>, and <code>Entertainment</code> are not correlated with anything, not even among themselves.<br/>
@@ -9910,7 +9910,7 @@ C:\Users\BillyLjm\Envs\aiap\Lib\site-packages\scipy\stats\contingency.py:459: Ru
 <h1 id="3.-Feature-Engineering">3. Feature Engineering<a class="anchor-link" href="#3.-Feature-Engineering">¶</a></h1><p>Having understood the dataset, we can manually engineer some features to help our ML model.</p>
 <ul>
 <li>We'll drop rows with null <code>Ticket Type</code>, since that is our target variable and we can't train without labels.</li>
-<li>We'll drop <code>Wifi</code>, <code>Dining</code>, and <code>Entertainment</code> since their trustworthines is suspect, and they don't correlate with anything.</li>
+<li>We'll drop <code>Wifi</code>, <code>Dining</code>, and <code>Entertainment</code> since their trustworthiness is suspect, and they don't correlate with anything.</li>
 <li>We'll drop <code>Logging</code> since it also doesn't correlate with anything.</li>
 <li>We'll take only the year from <code>Date of Birth</code>, since its range is pretty broad and keeping just the year should still give us enough granularity.</li>
 <li>We'll one-hot encode the categorical variables.</li>
@@ -10172,7 +10172,7 @@ But I'll do them manually here to give an idea of how they will work.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="3.2-Data-Imputing">3.2 Data Imputing<a class="anchor-link" href="#3.2-Data-Imputing">¶</a></h2><p>Our data has a lot of uncorrelated null values, with 92% of rows having at least one null value.<br/>
 Thus, we can't drop all of them and instead have to impute these missing values.</p>
-<p>I'll use the a simple imputer to inpute the mean value for numerical/ordinal columns, and the most frequent values for the nominal columns.<br/>
+<p>I'll use the a simple imputer to impute the mean value for numerical/ordinal columns, and the most frequent values for the nominal columns.<br/>
 Hopefully, since these null values are distributed all over the dataframe, the imputation will not affect the correlations too much.</p>
 </div>
 </div>
@@ -10615,14 +10615,14 @@ Hopefully, since these null values are distributed all over the dataframe, the i
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="3.4-Principal-Component-Analysis">3.4 Principal Component Analysis<a class="anchor-link" href="#3.4-Principal-Component-Analysis">¶</a></h2><p>We will apply PCA on the 13 pre-pruchase ratings, since EDA suggested subsets of them are highly correlated among themselves.</p>
+<h2 id="3.4-Principal-Component-Analysis">3.4 Principal Component Analysis<a class="anchor-link" href="#3.4-Principal-Component-Analysis">¶</a></h2><p>We will apply PCA on the 13 pre-purchase ratings, since EDA suggested subsets of them are highly correlated among themselves.</p>
 <p>The first 3 principal components were what were already spotted in the Spearman correlation matrix:</p>
 <ul>
 <li>PC1 is our activity archetype, mostly weighted in <code>Onboard Dining Service</code>, <code>Online Check-in</code>, <code>Cabin Comfort</code>, <code>Onboard Entertainment</code>.</li>
 <li>PC2 is our convenience archetype, mostly weighted in <code>Onboard Wifi Service</code>, <code>Embarkation/Disembarkation time convenient</code>, <code>Ease of Online booking</code>, <code>Gate location</code>.</li>
-<li>PC3 is our hospitality achetype, mostly weighted in <code>Cabin service</code>, <code>Baggage handling</code>, <code>Port Check-in Service</code>, <code>Onboard Service</code>.</li>
+<li>PC3 is our hospitality archetype, mostly weighted in <code>Cabin service</code>, <code>Baggage handling</code>, <code>Port Check-in Service</code>, <code>Onboard Service</code>.</li>
 </ul>
-<p>Based on this, we will keep the first 5 principal components (out of the 13 pre-pruchase ratings), which already explains 80% of the Spearman correlation.</p>
+<p>Based on this, we will keep the first 5 principal components (out of the 13 pre-purchase ratings), which already explains 80% of the Spearman correlation.</p>
 </div>
 </div>
 </div>

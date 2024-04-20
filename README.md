@@ -3,17 +3,17 @@ Full Name: Lim Jun Ming
 Email Address: billy.ljm@gmail.com  
   
 ## Folder Structure  
-- `.github/`: github actions workflow
+- `.github/`: github actions workflow  
 - `src/`: Folder of the machine learning pipelines  
     - `datapipeline.py`: Datapipeline class to read and clean the datasets, and separate into features and labels  
     - `model_dummy.py`: Dummy classifier to set the baseline  
     - `model_svm.py`: Linear support vector machine model  
     - `model_forest.py`: Random forest model  
     - `model_boost.py`: Gradient-boosted tree model  
-    - `transfromers.py`: custom sklearn column transformers
+    - `transfromers.py`: custom sklearn column transformers  
 - `data/`: Folder of the training and testing datasets *(this is required for `run.sh` and the github actions to run successfully)*  
-    - `cruise_pre.db`: pre-purchase survey dataset
-    - `cruise_post.db`: post-trip survey dataset
+    - `cruise_pre.db`: pre-purchase survey dataset  
+    - `cruise_post.db`: post-trip survey dataset  
 - `requirements.txt`: Python requirement file  
 - `run.sh`: Bash script that trains all the ML models and tests them  
   
@@ -25,24 +25,24 @@ An example of its output is given below.
 $ bash run.sh  
 -------  
  Dummy  
--------
-Hyperparameters used are {}
-The test F1-macro score is 0.21581929516985543
------
- SVM
------
-Hyperparameters used are {'C': 0.03125}
-The test F1-macro score is 0.4957812932938626
----------------
- Random Forest
----------------
-Hyperparameters used are {'criterion': 'gini', 'max_depth': 80, 'max_features': 'sqrt', 'n_estimators': 10}
-The test F1-macro score is 0.5420678411521804
-----------------
- Gradient Boost
-----------------
-Hyperparameters used are {'learning_rate': 0.1, 'max_depth': 9, 'max_iter': 500}
-The test F1-macro score is 0.5482298987666266
+-------  
+Hyperparameters used are {}  
+The test F1-macro score is 0.21581929516985543  
+-----  
+ SVM  
+-----  
+Hyperparameters used are {'C': 0.03125}  
+The test F1-macro score is 0.4957812932938626  
+---------------  
+ Random Forest  
+---------------  
+Hyperparameters used are {'criterion': 'gini', 'max_depth': 80, 'max_features': 'sqrt', 'n_estimators': 10}  
+The test F1-macro score is 0.5420678411521804  
+----------------  
+ Gradient Boost  
+----------------  
+Hyperparameters used are {'learning_rate': 0.1, 'max_depth': 9, 'max_iter': 500}  
+The test F1-macro score is 0.5482298987666266  
 ```  
   
 ## Pipeline Instructions  
@@ -65,13 +65,13 @@ The flow of the pipelines in each `model_xxx.py` are very similar.
 4. Calling `model.test()` returns the F1-macro score of the trained model on the test dataset  
 5. Calling `model.predict(features)` the applies the trained model onto new data beyond the train/test dataset.  
   
-## Data Cleaning
-The steps taken to clean the raw dataset from the SQL databases are:
+## Data Cleaning  
+The steps taken to clean the raw dataset from the SQL databases are:  
 - Removed duplicated `Ext_Intcode`, only taking the rows with fewer null values.  
 - Pre-purchase and post-trip surveys are joined based on the now-unique `Ext_Intcode`.  
 - All the pre-purchase 5-star ratings are converted to the same ordinal scale (1 to 5).  
 - `Cruise Distance` is converted to the numerical distance in kilometres.  
-- `Cruise Names` typos are fixed by mapped onto either `'Blastoise'` or `'Lapras'` based on the smallest Levenshtein edit distance.
+- `Cruise Names` typos are fixed by mapped onto either `'Blastoise'` or `'Lapras'` based on the smallest Levenshtein edit distance.  
 - `Date of Birth` is thresholded such that any dates before 1920 is ignored.  
 - `Logging` is thresholded such that any dates after September 2023 is ignored.  
   
@@ -107,16 +107,17 @@ The action of this preprocessing pipeline on each column is illustrated below.
 <table>  
 	<tr>  
 		<td>Ticket Type</td>  
-		<td>Cruise Distance</td>  
 		<td>Gender</td>  
 		<td>Cruise Name</td>  
 		<td>Source of Traffic</td>  
 		<td>Date of Birth</td>  
+		<td>Cruise Distance</td>  
 		<td>Onboard Wifi Service</td>  
 		<td>Embarkation/Disembarkation time convenient</td>  
 		<td>Ease of Online booking</td>  
 		<td>Gate location</td>  
-		<td>Onboard Dining Service`,  `Online Check-in</td>  
+		<td>Onboard Dining Service</td>  
+		<td>Online Check-in</td>  
 		<td>Cabin Comfort</td>  
 		<td>Onboard Entertainment</td>  
 		<td>Cabin service</td>  
@@ -131,17 +132,18 @@ The action of this preprocessing pipeline on each column is illustrated below.
 	</tr>  
 	<tr>  
 		<td rowspan=3>Label Encoder</td>  
-		<td colspan=4>-</td>  
+		<td colspan=3>-</td>  
 		<td>Year()</td>  
-		<td colspan=12>-</td>  
+		<td colspan=14>-</td>  
 		<td colspan=4 rowspan=3>Dropped</td>  
 	</tr>  
 	<tr>  
-		<td colspan=4>Impute Most Frequent Category</td>  
-		<td colspan=13>Impute Mean</td>  
+		<td colspan=3>Impute Most Frequent Category</td>  
+		<td colspan=15>Impute Mean</td>  
 	</tr>  
 	<tr>  
-		<td colspan=4>One-Hot Encode</td>  
+		<td colspan=3>One-Hot Encode</td>  
+		<td colspan=2>-</td>  
 		<td colspan=13>Principal Component Analysis</td>  
 	</tr>  
 </table>  
